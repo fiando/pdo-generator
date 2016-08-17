@@ -1,0 +1,53 @@
+Time : 14:23:27
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'field list'
+Raw SQL : SELECT count(id) FROM education
+
+Time : 14:23:18
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'field list'
+Raw SQL : SELECT count(id) FROM education
+
+Time : 14:22:58
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'age' in 'field list'
+Raw SQL : SELECT max(age) FROM education
+
+Time : 14:22:49
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'age' in 'field list'
+Raw SQL : SELECT max(age) FROM education
+
+Time : 14:20:38
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Firstname' in 'field list'
+Raw SQL : INSERT INTO education (Firstname,Age,Sex) VALUES (:Firstname,:Age,:Sex)
+
+Time : 14:20:38
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Firstname' in 'field list'
+Raw SQL : INSERT INTO education (Firstname,Age,Sex) VALUES (:Firstname,:Age,:Sex)
+
+Time : 14:20:16
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'fortlio.persons' doesn't exist
+Raw SQL : INSERT INTO persons (Firstname,Age,Sex) VALUES (:Firstname,:Age,:Sex)
+
+Time : 14:20:14
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'fortlio.persons' doesn't exist
+Raw SQL : INSERT INTO persons (Firstname,Age,Sex) VALUES (:Firstname,:Age,:Sex)
+
+Time : 14:19:37
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'fortlio.Persons' doesn't exist
+Raw SQL : SELECT * FROM Persons WHERE firstname = :firstname AND age = :age
+
+Time : 14:19:36
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'fortlio.Persons' doesn't exist
+Raw SQL : SELECT * FROM Persons WHERE firstname = :firstname AND age = :age
+
+Time : 14:17:32
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'fortlio.Persons' doesn't exist
+Raw SQL : SELECT * FROM Persons WHERE firstname = :firstname AND age = :age
+
+Time : 14:17:18
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'fortlio.persons' doesn't exist
+Raw SQL : INSERT INTO persons (Firstname,Age,Sex) VALUES (:Firstname,:Age,:Sex)
+
+Time : 14:16:57
+SQLSTATE[HY000] [1049] Unknown database 'abc'
+
+Time : 14:16:17
+SQLSTATE[HY000] [1049] Unknown database 'testdb'

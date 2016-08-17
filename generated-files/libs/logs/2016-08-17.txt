@@ -1,0 +1,15 @@
+Time : 14:56:13
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'tes' in 'field list'
+Raw SQL : INSERT INTO person (name,tes,Sex) VALUES (:name,:tes,:Sex)
+
+Time : 14:55:59
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Firstname' in 'field list'
+Raw SQL : INSERT INTO person (name,Firstname,Sex) VALUES (:name,:Firstname,:Sex)
+
+Time : 14:55:29
+SQLSTATE[42S22]: Column not found: 1054 Unknown column 'year_end' in 'field list'
+Raw SQL : SELECT max(year_end) FROM person
+
+Time : 14:54:56
+SQLSTATE[42S02]: Base table or view not found: 1146 Table 'figen.education' doesn't exist
+Raw SQL : SELECT max(year_end) FROM education

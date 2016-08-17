@@ -1,0 +1,11 @@
+pdo-generator
+ - core
+    - pdo-generator
+ - libs
+   - db pdo mysql
+   - easycrud
+ - examples
+ - generated-files
+ - docs
+ - index.php
+ - generator.php
