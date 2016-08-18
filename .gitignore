@@ -18,5 +18,4 @@ _site
 
 libs2/
 drafts
-generated-files/*
-
+*.test.php

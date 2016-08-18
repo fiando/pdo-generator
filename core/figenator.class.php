@@ -26,7 +26,7 @@ class Figenator {
   public $dataClass;
 
   function __construct() {
-    $this->easyCrudPath  = '../libs/easyCRUD.class.php';
+    $this->easyCrudPath  = 'libs/easyCRUD.class.php';
     $this->generatedPath = '/generated-files/';
   }
 
@@ -112,6 +112,11 @@ class Figenator {
    * @return [type] [description]
    */
   public function generate() {
+
+    if (empty($this->className)) {
+      $this->className = 'pdo_default';
+    }
+
     $dir = $this->getDir();
 
     $this->createDir($this->className);
@@ -127,7 +132,7 @@ class Figenator {
     $settingsTemplate = settingsTemplate($this->dataSettings);
 
     //Generate Class, Index, Settings File
-    $this->createFile($this->className,$classTemplate, $this->className);
+    $this->createFile($this->className . '.class',$classTemplate, $this->className);
     $this->createFile('index',$indexTemplate, $this->className);
     $this->createFile('settings.ini', $settingsTemplate, 'libs');
 
