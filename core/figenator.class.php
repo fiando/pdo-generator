@@ -1,7 +1,5 @@
 <?php
 
-// TODO: include function
-// TODO: figen class
 
 require_once 'figenator.function.php';
 
@@ -30,7 +28,17 @@ class Figenator {
   function __construct() {
     $this->easyCrudPath  = '../libs/easyCRUD.class.php';
     $this->generatedPath = '/generated-files/';
+  }
 
+  private function setDataIndex() {
+    $this->dataIndex = array(
+      "className" => $this->className
+    );
+
+    return $this->dataIndex = array_filter($this->dataIndex, "removeEmptyArray");
+  }
+
+  private function setDataSettings() {
     $this->dataSettings = array(
       "dbHost" => $this->dbHost ,
       "dbUser" => $this->dbUser ,
@@ -38,10 +46,10 @@ class Figenator {
       "dbName" => $this->dbName ,
     );
 
-    $this->dataIndex = array(
-      "className" => $this->className
-    );
+    return $this->dataSettings = array_filter($this->dataSettings, "removeEmptyArray");
+  }
 
+  private function setDataClass() {
     $this->dataClass = array(
       "easyCrudPath" => $this->easyCrudPath ,
       "className" => $this->className,
@@ -49,11 +57,12 @@ class Figenator {
       "primaryKey" => $this->primaryKey,
     );
 
-    $this->dataSettings = array_filter($this->dataSettings, "removeEmptyArray");
-    $this->dataIndex = array_filter($this->dataIndex, "removeEmptyArray");
-    $this->dataClass = array_filter($this->dataClass, "removeEmptyArray");
+    return $this->dataClass = array_filter($this->dataClass, "removeEmptyArray");
+  }
 
-    // print_r($this->dataIndex);
+  public function getDir($name = '') {
+    $dir = dirname(__DIR__) . $this->generatedPath . $name;
+    return $dir;
   }
 
   /**
@@ -63,42 +72,69 @@ class Figenator {
    * @return [bool]          return true if file success created
    */
 
-  public function createFile($name,$content) {
-    // TODO: DIR
-    $fp = fopen($this->dir . 'index.php', 'w');
-    fwrite($fp, $content);
+  private function createFile($name,$content,$path = '') {
+    $dir = $this->getDir();
+    $fp = fopen($dir . $path . '/' . $name . '.php', 'w');
+    return fwrite($fp, $content);
   }
 
+  private function createDir($path = '') {
+    $dir = $this->getDir();
+    $dir = $dir . $path;
+    $old = umask(0);
+    if (!file_exists($dir) && mkdir($dir, 0777, TRUE)) {
+      chmod($dir, 0777) or die('Change Dir Permission Fail');
+      return true;
+    }
+    umask($old);
+    return false;
 
+  }
+
+  public function generateLibs() {
+    $dir = $this->getDir('libs/');
+    $libs_dir = dirname(__DIR__) . '/libs/';
+
+    $this->createDir('libs');
+
+    if (file_exists($libs_dir) && file_exists($dir)) {
+      copy($libs_dir . 'Db.class.php' , $dir.'Db.class.php' );
+      copy($libs_dir . 'easyCRUD.class.php' , $dir . 'easyCRUD.class.php');
+      copy($libs_dir . 'Log.class.php' , $dir . 'Log.class.php' );
+      // copy($libs_dir . 'settings.ini.php' , $dir . 'settings.ini.php');
+      return true;
+    }
+
+    return false;
+  }
   /**
    * Generate PDO MySQL
    * @return [type] [description]
    */
   public function generate() {
-    $generatedPath = $this->generatedPath;
-    $structure = dirname(__DIR__) . $generatedPath . $this->className . '/';
+    $dir = $this->getDir();
 
-    if(!dir($structure)) {
-      $old = umask(0);
-      mkdir("$structure", 0777, TRUE);
-      chmod("$structure", 0777);
-      umask($old);
+    $this->createDir($this->className);
+
+    //Set Template Variable
+
+    $this->setDataSettings();
+    $this->setDataIndex();
+    $this->setDataClass();
+
+    $indexTemplate = indexTemplate($this->dataIndex);
+    $classTemplate = classTemplate($this->dataClass);
+    $settingsTemplate = settingsTemplate($this->dataSettings);
+
+    //Generate Class, Index, Settings File
+    $this->createFile($this->className,$classTemplate, $this->className);
+    $this->createFile('index',$indexTemplate, $this->className);
+    $this->createFile('settings.ini', $settingsTemplate, 'libs');
+
+    if (!file_exists($this->getDir('libs'))) {
+      $this->generateLibs();
     }
 
-    $index = indexTemplate();
-    $class = classTemplate();
-
-    // TODO: create func create file
-    // TODO: create strcutre dir
-    $fpIndex = fopen($structure . 'index.php', 'w');
-    $fpClass = fopen($structure . $this->className .'.php', 'w');
-    $fpSettings = fopen(dirname(__DIR__) .'/libs/settings.ini.php', 'w');
-
-    fwrite($fpIndex, $index);
-    fwrite($fpClass, $class);
-    fwrite($fpSettings, $index);
-
-    echo $structure;
     /**
      * make dir on generated-files named className
      * generate index.php
@@ -108,30 +144,9 @@ class Figenator {
        * create settings.ini.file
      * finish
      */
+
   }
 
-
 }
-
-/**
- * Test Class
- */
-
-$figen = new figenator;
-
-$figen->tableName = 'd';
-$figen->className = 'ga';
-$figen->primaryKey = 'id';
-
-/**
- * Database Settings
- */
-
-$figen->dbHost = 'localhost';
-$figen->dbUser = 'root';
-$figen->dbPass = '';
-$figen->dbName = 'tes';
-
-$figen->generate();
 
 ?>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,10 +32,15 @@
         box-shadow: 1px 0px 3px 1px  #000;
       }
       input, select {
-        width: 50%;
-        text-align: center;
+        width: 30%;
         font-size: 110%;
         padding: 5px;
+        margin: 10px 0;
+      }
+      label {
+        width: 200px;
+        text-align: center;
+        display: inline-block;
       }
     </style>
   </head>
@@ -42,23 +48,34 @@
     <div class="table">
       <div class="container">
         <h1>PDO MYSQL Generator</h1>
+        <h2><?php echo (isset($_SESSION['msg'])) ? $_SESSION['msg'] : '' ; ?></h2>
         <form action="generator.php" method="post">
-          <h3>Select From Database Table Name</h3>
-          <select class="" name="tableNameDb">
-            <option value="">Select Database Table</option>
-            <option value="option">option</option>
-            <option value="option">option</option>
-          </select>
-          <h3>OR Name Set Name Table</h3>
-          <input type="text" name="tableName" placeholder="Blank it yo use Database Table Name">
-          <h3>Type Class Name</h3>
-          <input type="text" name="className" value="">
-          <h3>Type Name of key Field</h3>
-          <input type="text" name="keyField" value="">
-          <h3>Configuration Finish, now click "Generate" Button</h3>
+          <fieldset>
+            <legend>File Settings</legend>
+            <label for="tableName">Table Name</label>
+            <input type="text" name="tableName" placeholder="Table Name, ex: User"><br>
+            <label for="className">Class Name</label>
+            <input type="text" name="className" placeholder="Class Name, ex: Person"><br>
+            <label for="keyField">Prmary Key</label>
+            <input type="text" name="keyField" placeholder="Primary Key, ex: id_user,id"><br>
+          </fieldset>
+          <fieldset>
+            <legend>Database Settings ( libs/settings.ini.php )</legend>
+            <label for="dbHost">Database Host</label>
+            <input type="text" name="dbHost" placeholder="Database Host" value = 'localhost'><br>
+            <label for="dbUser">Database User</label>
+            <input type="text" name="dbUser" placeholder="Database User" value = 'root'><br>
+            <label for="dbPass">Database Password</label>
+            <input type="text" name="dbPass" placeholder="Database Password" value = ''><br>
+            <label for="dbName">Database Name</label>
+            <input type="text" name="dbName" placeholder="Database Name" value = ''><br>
+          </fieldset>
+          <h4>Configuration Finish ? now click "Generate" Button</h4>
+          <p>If empty, will be generate default file</p>
           <input type="submit" name="generate" value="Generate">
         </form>
       </div>
     </div>
   </body>
 </html>
+<?php session_destroy(); ?>

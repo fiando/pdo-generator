@@ -1,0 +1,22 @@
+# Ignore docs files
+_gh_pages
+_site
+.ruby-version
+.git
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.log
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*.zip
+*~
+
+libs2/
+drafts
+generated-files/*
+

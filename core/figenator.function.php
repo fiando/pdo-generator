@@ -28,8 +28,9 @@ function settingsTemplate($dataSettings = array()) {
     "dbPassword" => "" ,
     "dbName" => "" ,
   );
-
-  extract($dataSettings, EXTR_OVERWRITE);
+  if(!empty($dataSettings)) {
+    extract($dataSettings, EXTR_OVERWRITE);
+  }
   extract($default, EXTR_SKIP);
 
   $ini     = <<<HTML
@@ -48,16 +49,39 @@ function indexTemplate($dataIndex = array()) {
   global $copy;
 
   $default = array(
-    "className" => 'defaultClass'
+    "className" => 'defaultClass',
+    "primaryKey" => 'id'
   );
-
-  extract($dataIndex, EXTR_OVERWRITE);
+  if(!empty($dataIndex)) {
+    extract($dataIndex, EXTR_OVERWRITE);
+  }
   extract($default, EXTR_SKIP);
 
   $template = <<<HTML
 <?php
   require("$className.class.php");
-  \$className  = new $className();
+  \$$className  = new $className();
+
+/**
+ * Your Create, Read, Update, Delete Here
+ */
+
+// Create
+// \$className->yourProperty = 'Property Value';
+// \$className->otherProperty = 'Property Value';
+// \$creation = \$className->Create();
+
+// Update
+// \$className->yourProperty = 'Property Value';
+// \$className->otherProperty = 'Property Value';
+// \$saved = \$className->Save();
+
+// Delete
+// \$className->$primaryKey = 'Your Primary Key Value';
+// \$delete= \$className->Delete();
+
+// Get all $className
+// \$$className = \$className->all();
 
 HTML;
 
@@ -74,7 +98,9 @@ function classTemplate($dataClass = array()) {
     "primaryKey" => 'id',
   );
 
-  extract($dataClass, EXTR_OVERWRITE);
+  if(!empty($dataClass)) {
+    extract($dataClass, EXTR_OVERWRITE);
+  }
   extract($default, EXTR_SKIP);
 
   $template = <<<HTML
@@ -98,25 +124,3 @@ HTML;
 function removeEmptyArray($var) {
   return !empty($var);
 }
-
-// $dataSettings = array(
-//   "dbHost" => "localhost" ,
-//   "dbUser" => "" ,
-//   "dbPassword" => "" ,
-//   "dbName" => "" ,
-// );
-//
-// $dataIndex = array(
-//   "className" => "Person"
-// );
-//
-// $dataClass = array(
-//   "easyCrudPath" => '../libs/easyCRUD.class.php' ,
-//   "className" => 'Person',
-//   "tableName" => 'Person',
-//   "primaryKey" => 'id',
-// );
-//
-// echo settingsTemplate($dataSettings)."\n";
-// echo indexTemplate($dataIndex)."\n";
-// echo classTemplate($dataClass)."\n";
