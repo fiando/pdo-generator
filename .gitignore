@@ -20,4 +20,4 @@ libs2/
 drafts
 *.test.php
 docs
-generated-files
+/generated-files/*
