@@ -19,3 +19,5 @@ _site
 libs2/
 drafts
 *.test.php
+docs
+generated-files

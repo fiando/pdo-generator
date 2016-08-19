@@ -1,5 +1,5 @@
 <?php
-  require_once("../libs/easyCRUD.class.php");
+  require_once("libs/easyCRUD.class.php");
 
   class pdo_default Extends Crud {
 
